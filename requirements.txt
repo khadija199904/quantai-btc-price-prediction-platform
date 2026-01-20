@@ -1,0 +1,12 @@
+psycopg2-binary
+scikit-learn
+fastapi
+seaborn
+matplotlib
+passlib
+dotenv
+sqlalchemy
+pyjwt
+pyarrow
+pyspark==3.5.1
+apache-airflow==2.8.1
