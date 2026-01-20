@@ -10,3 +10,4 @@ pyjwt
 pyarrow
 pyspark==3.5.1
 apache-airflow==2.8.1
+dotenv
