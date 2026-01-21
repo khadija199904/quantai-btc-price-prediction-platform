@@ -2,4 +2,4 @@ from pydantic import BaseModel,Field
 
     
 class PredictionResponse(BaseModel):
-    prediction: float
+    prediction_value: float
