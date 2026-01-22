@@ -1,7 +1,28 @@
+# Virtual Environments
+venv/
+.venv/
 env/
+
+
+# IDE and Project Specs
 .env
+.ipynb_checkpoints/
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Data and System
 data/
+hadoop/
+spark/
+airflow/logs/
+airflow/airflow.db
+
+# OS Files
+.DS_Store
+Thumbs.db
 .venv/
 __pycache__/
 logs/
 *.parquet
+logs/
