@@ -72,7 +72,6 @@ def clean_to_silver():
     
     print("Transformation complete!")
     df_silver.show(5)
-
 if __name__ == "__main__":
     try:
         clean_to_silver()
