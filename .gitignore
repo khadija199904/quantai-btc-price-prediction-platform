@@ -22,7 +22,7 @@ airflow/airflow.db
 .DS_Store
 Thumbs.db
 .venv/
-__pycache__/
 logs/
 *.parquet
-logs/
+*.pyc
+*.log

@@ -6,7 +6,7 @@ import os
 from pyspark.sql.functions import col, from_unixtime, to_timestamp
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from spark_session import spark
+from bronze.spark_session import spark
 
 load_dotenv() 
 def data_collection():
@@ -39,7 +39,8 @@ def data_collection():
   
   
   psdf.write \
-    .mode("overwrite") \
-    .parquet("data/bronze/binance_gold.parquet")
+    .mode("append") \
+    .parquet("/opt/airflow/data/bronze/binance_gold.parquet")
   return psdf
-data_collection()
+
+# data_collection()

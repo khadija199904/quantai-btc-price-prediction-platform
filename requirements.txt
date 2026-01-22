@@ -3,7 +3,6 @@ scikit-learn
 uvicorn
 fastapi
 seaborn
-matplotlib
 passlib
 dotenv
 sqlalchemy
