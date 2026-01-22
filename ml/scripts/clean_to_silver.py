@@ -65,10 +65,34 @@ def clean_to_silver():
     
     print(f"Silver DataFrame count: {df_silver.count()}")
     
-    # Save to Silver zone
+    # Save to Silver zone (Parquet)
     silver_path = "data/silver/binance_silver.parquet"
     print(f"Saving to Silver zone: {silver_path}")
     df_silver.write.mode("overwrite").parquet(silver_path)
+
+    # Save to PostgreSQL
+    print("Exporting to PostgreSQL...")
+    try:
+        from dotenv import load_dotenv
+        load_dotenv()
+        
+        db_url = f"jdbc:postgresql://{os.getenv('DB_HOST', 'localhost')}:{os.getenv('DB_PORT', '5432')}/{os.getenv('DB_NAME', 'postgres')}"
+        db_properties = {
+            "user": os.getenv('DB_USER', 'postgres'),
+            "password": os.getenv('DB_PASSWORD', 'postgres'),
+            "driver": "org.postgresql.Driver"
+        }
+        
+        df_silver.write.jdbc(
+            url=db_url,
+            table=os.getenv('DB_TABLE', 'btc_silver'),
+            mode="overwrite",
+            properties=db_properties
+        )
+        print("Export to PostgreSQL complete!")
+    except Exception as e:
+        print(f"PostgreSQL export failed: {e}")
+        print("Note: Ensure PostgreSQL is running and credentials in .env are correct.")
     
     print("Transformation complete!")
     df_silver.show(5)
