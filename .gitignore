@@ -3,6 +3,7 @@ venv/
 .venv/
 env/
 
+
 # IDE and Project Specs
 .env
 .ipynb_checkpoints/
@@ -24,3 +25,8 @@ airflow/airflow.db
 Thumbs.db
 *.pyc
 
+.venv/
+logs/
+*.parquet
+*.pyc
+*.log
