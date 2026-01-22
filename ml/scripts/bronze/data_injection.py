@@ -6,7 +6,7 @@ import os
 from pyspark.sql.functions import col, from_unixtime, to_timestamp
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from bronze.spark_session import spark
+from ml.scripts.spark_session import spark
 
 load_dotenv() 
 def data_collection():
