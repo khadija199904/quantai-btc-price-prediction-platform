@@ -12,12 +12,16 @@ os.environ['HADOOP_HOME'] = HADOOP_DIR
 os.environ['PYSPARK_PYTHON'] = sys.executable
 os.environ['PATH'] = os.path.join(HADOOP_DIR, 'bin') + os.pathsep + os.environ.get('PATH', '')
 
-spark = SparkSession.builder \
+def get_session():
+    spark = SparkSession.builder \
     .appName("btc_price_prediction") \
     .config(
         "spark.jars.packages",
         "org.postgresql:postgresql:42.7.3"
     ) \
     .getOrCreate()
+    spark.sparkContext.setLogLevel("ERROR")
+
+    return spark
 
 
