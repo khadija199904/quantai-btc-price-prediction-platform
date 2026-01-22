@@ -2,3 +2,8 @@ env/
 .env
 data/
 .venv/
+__pycache__/
+logs/
+*.parquet
+*.pyc
+*.log
