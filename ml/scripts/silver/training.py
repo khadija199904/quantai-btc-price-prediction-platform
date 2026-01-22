@@ -33,8 +33,7 @@ def training_evaluation_model(data):
         ("Random Forest", RandomForestRegressor(featuresCol="features_scaled", labelCol=target, numTrees=100, maxDepth=10, 
                        seed=42)),
         
-        ("Gradient Boosting (GBT)", GBTRegressor(featuresCol="features_scaled", labelCol=target, maxIter=100, maxDepth=6, 
-              seed=42))
+       
     ]  
     #  Évaluateurs
     evaluator_r2 = RegressionEvaluator(labelCol=target, predictionCol="prediction", metricName="r2")
