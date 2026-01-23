@@ -17,7 +17,7 @@ spark= SparkSession.builder.appName("initialize_spark").getOrCreate()
 async def make_prediction(current_user: USERS = Depends(get_current_user)):
     print(current_user)
     PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
-    model_path = PROJECT_ROOT / "ml" / "saved_model" / "Linear Regression_pipeline"
+    model_path = PROJECT_ROOT / "ml" / "saved_model" / "Linear_Regression_pipeline"
     try:
         model = PipelineModel.load(str(model_path))
         silver_path = "data/silver/binance_silver.parquet"

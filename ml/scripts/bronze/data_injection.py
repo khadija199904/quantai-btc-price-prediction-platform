@@ -6,10 +6,9 @@ import os
 from pyspark.sql.functions import col, from_unixtime, to_timestamp
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from ml.scripts.spark_session import get_session  
+from ml.scripts.spark_session import spark  
 
 load_dotenv() 
-spark= get_session()
 def data_collection():
 
   SYMBOL = 'BTCUSDT'
