@@ -6,7 +6,7 @@ from pyspark.ml.regression import LinearRegression, RandomForestRegressor
 
 
 
-def train_evaluate_models(train_data, test_data, assembler, target="close_t_plus_10"):
+def train_evaluate_models(train_data, test_data, assembler, target="target_close"):
     scaler = StandardScaler(inputCol="features", outputCol="features_scaled", withStd=True, withMean=True)
 
     models = [
