@@ -5,6 +5,7 @@ from pyspark.ml.feature import StandardScaler
 from pyspark.ml.regression import LinearRegression, RandomForestRegressor
 
 
+
 def train_evaluate_models(train_data, test_data, assembler, target="close_t_plus_10"):
     scaler = StandardScaler(inputCol="features", outputCol="features_scaled", withStd=True, withMean=True)
 
@@ -47,6 +48,3 @@ def train_evaluate_models(train_data, test_data, assembler, target="close_t_plus
     
     return best_model_fit
 
-if __name__ == "__main__":
-   from prepare_ml import pprepare_ml_data
-   train_data, test_data, assembler = prepare_ml_data(df_silver)

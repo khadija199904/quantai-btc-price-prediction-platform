@@ -30,6 +30,7 @@ def data_collection():
         "taker_buy_base_volume", "taker_buy_quote_volume", "ignore"
     ]
   psdf= spark.createDataFrame(api_data, columns)
+  
   num_cols= ["open_price", "high_price", "low_price", "close_price", "volume", "quote_asset_volume", "number_of_trades", "taker_buy_base_volume", "taker_buy_quote_volume"]
   for feature in num_cols:
       psdf= psdf.withColumn(feature, col(feature).cast('double'))
