@@ -19,7 +19,7 @@ def verify_password_hash(normal_password, hashed_password):
 #-----------------------Token----------------
 
 def create_token(user):
-      payload = {"username" : user.username}
+      payload = {"id" : user.id}
       token = jwt.encode(payload,key=SECRET_KEY,algorithm="HS256")
       return token
 
