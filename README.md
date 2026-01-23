@@ -1,7 +1,3 @@
-Voici une version enrichie et finalisée de votre **README.md**, intégrant les éléments que vous avez fournis tout en respectant une structure professionnelle adaptée à un projet de certification (RNCP).
-
----
-
 # 🪙 Quant-AI : Plateforme de Prédiction Haute Fréquence BTC/USDT
 
 [![Version](https://img.shields.io/badge/Version-1.0.0-blue)](https://github.com/)

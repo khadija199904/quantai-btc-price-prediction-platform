@@ -68,7 +68,7 @@ def training_evaluation_model(data):
 
 
     if best_model_fit :
-        save_path  = f"saved_model/{best_model_name}_pipeline"
+        save_path  = f"ml/saved_model/{best_model_name}_pipeline"
         model_fit.write().overwrite().save(save_path )
         print(f"\n MEILLEUR MODÈLE : {best_model_name} sauvegardé dans '{save_path}' avec un RMSE de {best_rmse:.2f}")
     
