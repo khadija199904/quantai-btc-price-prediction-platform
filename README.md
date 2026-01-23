@@ -1,6 +1,11 @@
-# 🪙 Quant-AI : Plateforme de Prédiction Haute Fréquence BTC/USDT
+#  Quant-AI : Plateforme de Prédiction Haute Fréquence BTC/USDT
 [![Python](https://img.shields.io/badge/Python-3.10+-yellow)](https://www.python.org/)
-[![Spark](https://img.shields.io/badge/Apache_Spark-3.5-orange)](https://spark.apache.org/)
+[![FastAPI](https://img.shields.io/badge/FastAPI-005571?style=for-the-badge&logo=fastapi)](https://fastapi.tiangolo.com/)
+[![Apache Spark](https://img.shields.io/badge/Apache_Spark-E25A1C?style=for-the-badge&logo=apachespark&logoColor=white)](https://spark.apache.org/)
+[![Apache Airflow](https://img.shields.io/badge/Apache_Airflow-017CEE?style=for-the-badge&logo=apacheairflow&logoColor=white)](https://airflow.apache.org/)
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-4169E1?style=for-the-badge&logo=postgresql&logoColor=white)](https://www.postgresql.org/)
+[![Scikit-Learn](https://img.shields.io/badge/Scikit_Learn-F7931E?style=for-the-badge&logo=scikitlearn&logoColor=white)](https://scikit-learn.org/)
+[![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)](https://www.docker.com/)
 
 ## 1. Présentation du Projet
 Ce projet consiste à développer une plateforme **"end-to-end"** capable de transformer des flux de données financiers bruts en prédictions actionnables. La plateforme récupère les données de marché (OHLC, volumes) sur l'API Binance, les traite via une infrastructure distribuée, entraîne un modèle de Machine Learning pour prédire le prix du Bitcoin à **T+10 minutes**, et expose les résultats via une API REST sécurisée.
