@@ -31,3 +31,4 @@ logs/
 *.pyc
 *.log
 *.pytest_cache
+*.log

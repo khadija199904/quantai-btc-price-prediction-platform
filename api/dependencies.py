@@ -1,11 +1,12 @@
+from fastapi.security import OAuth2PasswordBearer
 from api.database import SessionLocal
-from fastapi import Depends,Header,HTTPException
+from fastapi import Depends, Header, HTTPException, status
 from sqlalchemy.orm import Session
 from api.core.config import SECRET_KEY 
 from api.models.users import USERS
 from jose import JWTError, jwt
 
-
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login")
 
 # Dépendance pour la base de données
 def get_db():
@@ -16,7 +17,7 @@ def get_db():
         db.close()
 
 # verificatin de token crée en login
-def get_current_user (db: Session = Depends(get_db), token : str = Header()):
+def get_current_user (db: Session = Depends(get_db), token : str = Depends(oauth2_scheme)):
     if token is None:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED, 

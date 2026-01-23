@@ -1,8 +1,16 @@
 
+import os
+import sys
+
+# Add parent directory to sys.path to import spark_session
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from pyspark.ml import Pipeline
 from pyspark.ml.evaluation import RegressionEvaluator
 from pyspark.ml.feature import StandardScaler
 from pyspark.ml.regression import LinearRegression, RandomForestRegressor
+from bronze.data_injection import data_collection
+from silver.clean_to_silver import clean_to_silver
+from silver.prepare_ml import prepare_ml_data
 
 
 
@@ -10,9 +18,9 @@ def train_evaluate_models(train_data, test_data, assembler, target="target_close
     scaler = StandardScaler(inputCol="features", outputCol="features_scaled", withStd=True, withMean=True)
 
     models = [
-        ("Linear Regression", LinearRegression(featuresCol="features_scaled", labelCol=target)),
-        ("Random Forest", RandomForestRegressor(featuresCol="features_scaled", labelCol=target, numTrees=100, maxDepth=10, seed=42)),
-        ("Linear Regression ElasticNet", LinearRegression(featuresCol="features_scaled", labelCol=target, regParam=0.1, elasticNetParam=0.5))
+        ("Linear_Regression", LinearRegression(featuresCol="features_scaled", labelCol=target)),
+        ("Random_Forest", RandomForestRegressor(featuresCol="features_scaled", labelCol=target, numTrees=100, maxDepth=10, seed=42)),
+        ("Linear_Regression_ElasticNet", LinearRegression(featuresCol="features_scaled", labelCol=target, regParam=0.1, elasticNetParam=0.5))
     ]
     
     evaluator_r2 = RegressionEvaluator(labelCol=target, predictionCol="prediction", metricName="r2")
@@ -48,3 +56,7 @@ def train_evaluate_models(train_data, test_data, assembler, target="target_close
     
     return best_model_fit
 
+data_collection()
+silver= clean_to_silver()
+train_data, test_data, assembler= prepare_ml_data(silver)
+train_evaluate_models(train_data, test_data, assembler)
