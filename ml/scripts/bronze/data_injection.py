@@ -3,9 +3,10 @@ import os
 from dotenv import load_dotenv
 import sys
 import os
+from pyspark.sql.functions import col, from_unixtime, to_timestamp
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from utils.spark_session import spark
+from ml.scripts.spark_session import spark  
 
 load_dotenv() 
 def data_collection():
@@ -29,8 +30,18 @@ def data_collection():
         "taker_buy_base_volume", "taker_buy_quote_volume", "ignore"
     ]
   psdf= spark.createDataFrame(api_data, columns)
+  
+  num_cols= ["open_price", "high_price", "low_price", "close_price", "volume", "quote_asset_volume", "number_of_trades", "taker_buy_base_volume", "taker_buy_quote_volume"]
+  for feature in num_cols:
+      psdf= psdf.withColumn(feature, col(feature).cast('double'))
+
+  psdf = psdf.withColumn("open_time_ts", to_timestamp(from_unixtime(col("open_time")/1000))) \
+       .withColumn("close_time_ts", to_timestamp(from_unixtime(col("close_time")/1000)))
+  
+  
   psdf.write \
-    .mode("overwrite") \
+    .mode("append") \
     .parquet("data/bronze/binance_gold.parquet")
   return psdf
-data_collection()
+
+# data_collection()

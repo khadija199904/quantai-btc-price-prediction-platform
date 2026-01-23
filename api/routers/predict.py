@@ -1,0 +1,30 @@
+from fastapi import APIRouter, Depends, Path
+from sqlalchemy.orm import Session
+from api.dependencies import get_db,get_current_user
+from pyspark.ml.regression import LinearRegression, RandomForestRegressor
+from api.models.users import USERS
+from pyspark.sql import SparkSession
+from pyspark.ml import PipelineModel
+from pyspark.sql.functions import desc
+import sys
+from pathlib import Path
+from pyspark.ml import PipelineModel
+router = APIRouter()
+spark= SparkSession.builder.appName("initialize_spark").getOrCreate()
+
+#db: Session = Depends(get_db),current_user: USERS = Depends(get_current_user) 
+@router.post("/predict")
+async def make_prediction(current_user: USERS = Depends(get_current_user)):
+    print(current_user)
+    PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
+    model_path = PROJECT_ROOT / "ml" / "saved_model" / "Linear_Regression_pipeline"
+    try:
+        model = PipelineModel.load(str(model_path))
+        silver_path = "data/silver/binance_silver.parquet"
+        df= spark.read.parquet(silver_path)
+        data= df.orderBy(desc('open_time_ts')).limit(1)
+        prediction= model.transform(data)
+        result= prediction.select('target_close').collect()[0][0]
+        return {"status": "success", "prediction": result }
+    except Exception as e:
+        return {"status": "error"}
