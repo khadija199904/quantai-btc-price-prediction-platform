@@ -6,9 +6,10 @@ import os
 from pyspark.sql.functions import col, from_unixtime, to_timestamp
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from ml.scripts.spark_session import spark
+from ml.scripts.spark_session import get_session  
 
 load_dotenv() 
+spark= get_session()
 def data_collection():
 
   SYMBOL = 'BTCUSDT'
@@ -40,7 +41,7 @@ def data_collection():
   
   psdf.write \
     .mode("append") \
-    .parquet("/opt/airflow/data/bronze/binance_gold.parquet")
+    .parquet("data/bronze/binance_gold.parquet")
   return psdf
 
 # data_collection()

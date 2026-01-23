@@ -6,8 +6,8 @@ from pyspark.sql.window import Window
 # Add parent directory to sys.path to import spark_session
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from spark_session import spark
-
+from spark_session import get_session
+spark= get_session()
 def clean_to_silver():
     print("Spark context initialized.")
     print("Reading data from Bronze zone...")

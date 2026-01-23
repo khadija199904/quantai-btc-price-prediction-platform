@@ -1,10 +1,16 @@
+import os
+import sys
+
+# Add parent directory to sys.path to import spark_session
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from pyspark.sql import functions as F
 from pyspark.sql.window import Window
 from pyspark.ml import Pipeline
 from pyspark.ml.evaluation import RegressionEvaluator
 from pyspark.ml.feature import VectorAssembler ,StandardScaler
 from pyspark.ml.regression import LinearRegression, RandomForestRegressor, GBTRegressor
-
+from bronze.data_injection import data_collection
+from silver.clean_to_silver import clean_to_silver
 
 def training_evaluation_model(data):
  
@@ -73,3 +79,6 @@ def training_evaluation_model(data):
         print(f"\n MEILLEUR MODÈLE : {best_model_name} sauvegardé dans '{save_path}' avec un RMSE de {best_rmse:.2f}")
     
     return best_model_fit
+data_collection()
+data=clean_to_silver()
+training_evaluation_model(data)
