@@ -1,7 +1,4 @@
 # 🪙 Quant-AI : Plateforme de Prédiction Haute Fréquence BTC/USDT
-
-[![Version](https://img.shields.io/badge/Version-1.0.0-blue)](https://github.com/)
-[![License](https://img.shields.io/badge/License-MIT-green)](https://opensource.org/licenses/MIT)
 [![Python](https://img.shields.io/badge/Python-3.10+-yellow)](https://www.python.org/)
 [![Spark](https://img.shields.io/badge/Apache_Spark-3.5-orange)](https://spark.apache.org/)
 
@@ -81,7 +78,7 @@ Le projet est réalisé par une équipe de 3 experts :
 
 ---
 
-## 📈 7. Cas d'Utilisation
+## 7. Cas d'Utilisation
 - **Aide à la décision** : Fournir aux traders une tendance court terme fiable.
 - **Algorithmic Trading** : Intégration des prédictions dans des bots d'exécution.
 - **Analyse de Marché** : Centralisation des indicateurs techniques enrichis pour la recherche quantitative.
