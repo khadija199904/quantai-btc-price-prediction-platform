@@ -12,4 +12,5 @@ pyspark==3.5.1
 apache-airflow==2.8.1
 dotenv
 requests
-
+python-jose
+argon2_cffi

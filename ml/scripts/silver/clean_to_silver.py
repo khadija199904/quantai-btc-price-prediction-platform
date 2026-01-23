@@ -7,7 +7,6 @@ from pyspark.sql.window import Window
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from spark_session import spark
-
 def clean_to_silver():
     print("Spark context initialized.")
     print("Reading data from Bronze zone...")
