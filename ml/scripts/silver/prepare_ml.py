@@ -19,5 +19,5 @@ def prepare_ml_data(data, features_cols=None):
     
     train_data = df.filter(F.col("time_index") <= split_point)
     test_data = df.filter(F.col("time_index") > split_point)
-    
+
     return train_data, test_data, assembler

@@ -75,7 +75,8 @@ def clean_to_silver():
     df_silver.write.mode("overwrite").parquet(silver_path)
     
     print("Transformation complete!")
-    df_silver.show(5)
+    spark.stop()
+
     return df_silver
 
 if __name__ == "__main__":
