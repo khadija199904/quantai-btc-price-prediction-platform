@@ -51,11 +51,17 @@ def test_prepare_ml_data_assembler(spark, silver_data):
     assert assembler.getHandleInvalid() == "skip"
 
 def test_prepare_ml_data_columns(spark, silver_data):
-    
-    
-    
-    train_df, _, _ = prepare_ml_data(silver_data)
+    train_df, test_df, _ = prepare_ml_data(silver_data)
     
     assert "time_index" in train_df.columns
+
+    # Respect de l'ordre (Le premier doit être l'index 1)
+    first_row = train_df.orderBy("open_time_ts").first()
+    assert first_row["time_index"] == 1, "Le time_index devrait commencer à 1 pour la donnée la plus ancienne"
+
+    total_original = silver_data.count()
+    assert train_df.count() + test_df.count() == total_original, "Le split ne doit pas perdre de lignes"
+
+    
 
 
