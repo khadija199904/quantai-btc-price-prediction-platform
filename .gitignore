@@ -30,3 +30,5 @@ logs/
 *.parquet
 *.pyc
 *.log
+*.pytest_cache
+*.log

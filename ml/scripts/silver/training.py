@@ -12,6 +12,8 @@ from bronze.data_injection import data_collection
 from silver.clean_to_silver import clean_to_silver
 from silver.prepare_ml import prepare_ml_data
 
+
+
 def train_evaluate_models(train_data, test_data, assembler, target="target_close"):
     scaler = StandardScaler(inputCol="features", outputCol="features_scaled", withStd=True, withMean=True)
 
