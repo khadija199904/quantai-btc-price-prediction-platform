@@ -42,6 +42,7 @@ def data_collection():
   psdf.write \
     .mode("append") \
     .parquet("data/bronze/binance_gold.parquet")
+  spark.stop()
   return psdf
 
 # data_collection()
