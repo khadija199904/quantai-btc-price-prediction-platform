@@ -19,6 +19,8 @@ spark = SparkSession.builder \
         "spark.jars.packages",
         "org.postgresql:postgresql:42.7.3"
     ) \
+    .config("spark.hadoop.fs.permissions.enabled", "false")\
+    .config("spark.hadoop.fs.file.impl", "org.apache.hadoop.fs.RawLocalFileSystem")\
     .getOrCreate()
 spark.sparkContext.setLogLevel("ERROR")
 

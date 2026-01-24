@@ -1,74 +1,67 @@
 import pytest
 import pandas as pd
 from pyspark.sql import SparkSession
+from unittest.mock import MagicMock, patch
+from datetime import datetime, timedelta  
+
 
 from ml.scripts.silver.prepare_ml import prepare_ml_data
+from ml.scripts.silver.clean_to_silver import clean_to_silver
 
-@pytest.fixture(scope="session")
+@pytest.fixture(scope="function")
 def spark():
     return (
         SparkSession.builder
-        .master("local[1]")
         .appName("pytest-spark")
         .getOrCreate()
     )
+  
 
 # Exemple de dataframe fictive pour test
 @pytest.fixture
-def sample_data(spark):
-    data = [
-    {
-        "open_time": 1609459200000,
-        "open_price": 29000.0,
-        "high_price": 29500.0,
-        "low_price": 28900.0,
-        "close_price": 29400.0,
-        "volume": 1000.0,
-        "close_time": 1609462800000,
-        "quote_asset_volume": 5000000.0,
-        "number_of_trades": 1200,
-        "taker_buy_base_volume": 600.0,
-        "taker_buy_quote_volume": 3000000.0,
-        "ignore": 0,
-        "open_time_ts": 1609459200,
-        "close_time_ts": 1609462800
-    },
-    {
-        "open_time": 1609462800000,
-        "open_price": 29400.0,
-        "high_price": 29600.0,
-        "low_price": 29100.0,
-        "close_price": 29200.0,
-        "volume": 1100.0,
-        "close_time": 1609466399999,
-        "quote_asset_volume": 5100000.0,
-        "number_of_trades": 1300,
-        "taker_buy_base_volume": 650.0,
-        "taker_buy_quote_volume": 2350000.0,
-        "ignore": 0,
-        "open_time_ts": 1609462800,
-        "close_time_ts": 1609466399
-    }
-   ]
+def silver_data(spark):
+    data = []
+    data = []
+    0
+    base_time = datetime(2024, 1, 1, 10, 0, 0)
+    for i in range(20):  
+        data.append({
+            "open_time_ts": base_time + timedelta(minutes=i),
+            "open_price": 45000.0 + i,
+            "high_price": 55500.0 + i,
+            "low_price": 30900.0 + i,
+            "close_price": 45400.0 + i,
+            "volume": 2000.0,
+            "taker_buy_base_volume": 1200.0
+        })
+    return spark.createDataFrame(data)
 
-    df = spark.createDataFrame(data)
-    return df 
+# --------------- Test la fonction prepare_ml_data ---------------------------------
 
-# Test de la fonction de préparation des données
-def test_prepare_data(sample_data):
-    cols = ["target_close", "returns", "MA_5", "MA_10","taker_ratio"]
+
+def test_prepare_ml_data_assembler(spark, silver_data):
     
-    train_df, test_df, assembler = prepare_ml_data(sample_data)
+    
+    features = ["TeamBTCPrijet","Khadija", "Maryem","Said","TalAIt","SimplonMaghreb"]
+    _, _, assembler = prepare_ml_data(silver_data, features_cols=features)
 
-    # Vérifie que les DataFrames ne sont pas vides
-    assert train_df.count() > 0
-    assert test_df.count() >= 0
-
-    # Vérifie que la colonne 'time_index' a été créée
-    assert "time_index" in train_df.columns
-    assert "time_index" in test_df.columns
-
-    # Vérifie que l'assembleur contient bien les colonnes attendues
-    expected_features = ["returns", "MA_5", "MA_10", "taker_ratio"]
-    assert assembler.getInputCols() == expected_features
+    # Vérifie que les colonnes d'entrée de l'assembler sont les bonnes
+    assert assembler.getInputCols() == features
     assert assembler.getOutputCol() == "features"
+    assert assembler.getHandleInvalid() == "skip"
+
+def test_prepare_ml_data_columns(spark, silver_data):
+    train_df, test_df, _ = prepare_ml_data(silver_data)
+    
+    assert "time_index" in train_df.columns
+
+    # Respect de l'ordre (Le premier doit être l'index 1)
+    first_row = train_df.orderBy("open_time_ts").first()
+    assert first_row["time_index"] == 1, "Le time_index devrait commencer à 1 pour la donnée la plus ancienne"
+
+    total_original = silver_data.count()
+    assert train_df.count() + test_df.count() == total_original, "Le split ne doit pas perdre de lignes"
+
+    
+
+

@@ -99,7 +99,8 @@ def clean_to_silver():
         print("Note: Ensure PostgreSQL is running and credentials in .env are correct.")
     
     print("Transformation complete!")
-    df_silver.show(5)
+    spark.stop()
+
     return df_silver
 
 if __name__ == "__main__":
