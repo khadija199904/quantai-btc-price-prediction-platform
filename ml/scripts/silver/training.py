@@ -55,8 +55,8 @@ def train_evaluate_models(train_data, test_data, assembler, target="target_close
         print(f"\nMEILLEUR MODÈLE : {best_model_name} sauvegardé dans '{save_path}' avec RMSE {best_rmse:.2f}")
     
     return best_model_fit
-
-data_collection()
-silver= clean_to_silver()
-train_data, test_data, assembler= prepare_ml_data(silver)
-train_evaluate_models(train_data, test_data, assembler)
+if __name__ == "__main__":
+    data_collection()
+    silver= clean_to_silver()
+    train_data, test_data, assembler= prepare_ml_data(silver)
+    train_evaluate_models(train_data, test_data, assembler)
